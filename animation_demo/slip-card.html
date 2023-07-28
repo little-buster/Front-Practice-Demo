@@ -38,7 +38,17 @@
             */
             transition: .5s 1s;
             opacity: 0;
-            color: rgb(30, 210, 200);
+            /* 文字渐变色方法 一 */
+            /* 为文本元素提供渐变背景。 */
+            background-image:-webkit-linear-gradient(bottom,rgb(3, 247, 255),#1ce261);
+           /* 使用透明颜色填充文本。 */
+            -webkit-background-clip:text; 
+            /* 用文本剪辑背景，用渐变背景作为颜色填充文本。 */
+            -webkit-text-fill-color: transparent;
+
+            /* 文字渐变色方法 二 */
+            /* 需要设置之前和之后 */
+            /* mask-image:-webkit-gradient(linear, 0 0, 0 bottom, from(rgb(81, 202, 67)), to(rgba(217, 247, 51, 0.962))); */
         }
         .b span{
             transition: .5s 1s;
