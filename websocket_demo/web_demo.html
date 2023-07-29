@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket</title>
+</head>
+<body>
+    <label for="">
+        <input type="text" value="英雄联盟，爱来自瓷器(前端html)" id="myMsg">
+        <button onclick="sendMsg()">发送消息</button>
+    </label>
+    
+</body>
+<script>
+    // 创建一个新的websocket对象
+    const socket = new WebSocket("ws://localhost:8088");
+    //状态输出
+    socket.onopen = function(event){
+        console.log("WebSocket连接已经打开");
+    }
+
+    socket.onmessage = (event)=>{
+        console.log("收到回复："+event.data);
+    }
+    
+    socket.onclose = (event)=>{
+        console.log("WebSocket连接已关闭");
+    }
+
+    const sendMsg = ()=>{
+        const Msg = document.getElementById('myMsg').value;
+        // console.log(Msg);
+        socket.send(Msg)
+    }
+</script>
+</html>
