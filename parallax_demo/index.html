@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>视差动画</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+body
+{
+    background: #ffffff;
+}
+section
+{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+section img
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+section h2
+{
+    position: relative;
+    color: #000;
+    font-size: 12em;
+}
+    </style>
+</head>
+<body>
+    <section>
+        <!-- data-speed:元素的移动速度 左上角（0，0） -->
+        <img src="https://raw.githubusercontent.com/Samaelish/Background-Parallax-Effect-on-Mousemove/main/1.png" data-speed='-5' class="layer">
+        <img src="https://raw.githubusercontent.com/Samaelish/Background-Parallax-Effect-on-Mousemove/main/2.png" data-speed='5' class="layer">
+        <img src="https://raw.githubusercontent.com/Samaelish/Background-Parallax-Effect-on-Mousemove/main/3.png" data-speed='-2' class="layer">
+        <img src="https://raw.githubusercontent.com/Samaelish/Background-Parallax-Effect-on-Mousemove/main/4.png" data-speed='6' class="layer">
+        <img src="https://raw.githubusercontent.com/Samaelish/Background-Parallax-Effect-on-Mousemove/main/5.png" data-speed='8' class="layer">
+        <img src="https://raw.githubusercontent.com/Samaelish/Background-Parallax-Effect-on-Mousemove/main/6.png" data-speed='-2' class="layer">
+        <img src="https://raw.githubusercontent.com/Samaelish/Background-Parallax-Effect-on-Mousemove/main/7.png" data-speed='4' class="layer">
+        <img src="https://raw.githubusercontent.com/Samaelish/Background-Parallax-Effect-on-Mousemove/main/8.png" data-speed='-9' class="layer">
+        <img src="https://raw.githubusercontent.com/Samaelish/Background-Parallax-Effect-on-Mousemove/main/9.png" data-speed='6' class="layer">
+        <img src="https://raw.githubusercontent.com/Samaelish/Background-Parallax-Effect-on-Mousemove/main/10.png" data-speed='-7' class="layer">
+        <img src="https://raw.githubusercontent.com/Samaelish/Background-Parallax-Effect-on-Mousemove/main/11.png" data-speed='5' class="layer">
+        <img src="https://raw.githubusercontent.com/Samaelish/Background-Parallax-Effect-on-Mousemove/main/12.png" data-speed='5' class="layer">
+        <h2 class="layer" data-speed="2">Parallax</h2>
+    </section>
+</body>
+<script>
+    document.addEventListener('mousemove', parallax);
+//  使用this.querySelectorAll('.layer')遍历所有具有.layer类的元素。这些元素可能是页面中的层，用于创建视差效果。
+// 对于每个层元素，获取其data-speed属性的值作为速度。
+// 根据鼠标位置(e.pageX和e.pageY)和速度，计算出新的相对位移量(x和y)。其中，window.innerWidth表示窗口的内部宽度，window.innerHeight表示窗口的内部高度。
+// 使用CSS3的transform属性，通过改变translateX()和translateY()来实现将层元素在水平和垂直方向上移动。
+    function parallax(e) {
+        //遍历所有layer
+        this.querySelectorAll('.layer').forEach(layer => {
+            //e是鼠标而不是图片
+            //console.log(e.pageX,e.pageY);
+            const speed = layer.getAttribute('data-speed')
+            // window.innerWidth 窗口的内部宽度(随着窗口放大缩小改变)
+            // window.innerHeiht 窗口的内部高度
+            // speed > 0 元素 与鼠标运动方向相反 因为下面是剑豪 
+            // （1200-0）/75=16 鼠标从0=》600（x）向右滑动
+            //相当于每张图片都重叠在一起，背景是透明的 (1200-600*5)/75 = -24 及原图片的原点从（16，y）=》（-24，y）向左移动
+            const x = (window.innerWidth - e.pageX * speed) / 75 
+            const y = (window.innerHeight - e.pageY * speed) / 75 //变化范围
+console.log(x,y);
+            // 本质还是利用CSS3 transform进行动画 
+            // transform 属性向元素应用 2D 或 3D 转换。该属性允许我们对元素进行旋转、缩放、移动或倾斜。
+            // transform是补间动画 及只有两个关键帧 初始 和 结束
+            // animation 可以有多个关键帧
+            layer.style.transform = `translateX(${x}px) translateY(${y}px)`
+    })
+}
+</script>
+</html>

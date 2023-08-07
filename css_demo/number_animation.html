@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数字滚动增长（类似双十一成交额大图渲染）</title>
+    <style>
+        body{
+            font-family: sans-serif;
+        }
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .title{
+            text-align: center;
+            margin: 1em;
+        }
+        .counters{
+            padding: 3em 2em;
+            background: #4193ff;
+            color: #fff;
+            text-align: center;
+        }
+        .counters > div{
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns:repeat(4,1fr);
+            gap: 4em 2em;
+        }
+        .counter{
+            position: relative;
+        }
+        .counter h1{
+            font-size: 3em;
+            margin-bottom: 0.5em;
+        }
+        .counter span{
+
+        }
+        .counter:not(:last-child)::before{
+            content: '';
+            background: #fff;
+            position: absolute;
+            width: 2px;
+            height: 3em;
+            top: 50%;
+            transform: translateY(-50%);
+            right: -1em;
+        }
+
+        @media screen and
+        (max-width:900px) and (min-width:501px) {
+            .counters > div{
+                grid-template-columns: 1fr 1fr;
+            }
+            .counter:nth-child(2)::before{
+                display: none;
+            }
+        }
+
+        @media screen and (max-width:500px) {
+            .counters > div{
+                grid-template-columns: 1fr;
+                row-gap: 5em;
+            }
+
+            .counter:not(:last-child)::before{
+                width: 90%;
+                height: 2px;
+                top: initial;
+                right: initial;
+                bottom: -3em;
+                left: 50%;
+                transform: translateX(-50%);
+        }   
+        }
+    </style>
+</head>
+<body>
+    <h1 class="title">滚动激活效果</h1>
+    <!-- 没什么用的div只是为了增加滑动的距离 -->
+    <div style="min-height: 40em;"></div>
+    <div class="counters">
+        <div>
+            <div class="counter">
+                <h1><span data-count="156">0</span></h1>
+                <h3>累计客户</h3>
+            </div>
+            <div class="counter">
+                <h1><span data-count="156">0</span>%</h1>
+                <h3>意向成交率</h3>
+            </div>
+            <div class="counter">
+                <h1><span data-count="227">0</span>￥</h1>
+                <h3>意向成交额</h3>
+            </div>
+            <div class="counter">
+                <h1><span data-count="90">0</span>+</h1>
+                <h3>年平均大客户</h3>
+            </div>
+        </div>
+    </div>
+
+    <div style="min-height: 20em;"></div>
+<h2 style="text-align: center;">到底了</h2>
+<button onclick="mytest()">优先级测试</button>
+    <script>
+        //需要增长的数字其实是div中的span
+        const counters = document.querySelectorAll(".counters span");
+        const container = document.querySelector('.counters');
+        //判断当前counters是否激活
+        let activated = false;
+        //添加窗口滚动监听器
+        window.addEventListener("scroll",()=>{
+// pageXOffset 和 pageYOffset 属性返回文档在窗口左上角水平和垂直方向滚动的像素。
+
+// pageXOffset 设置或返回当前页面相对于窗口显示区左上角的 X 位置。pageYOffset 设置或返回当前页面相对于窗口显示区左上角的 Y 位置。
+
+// pageXOffset 和 pageYOffset 属性相等于 scrollX 和 scrollY 属性。
+
+// 这些属性是只读的。
+            //if(a||b&&c) 代表 a||(b&&C) 页面高度偏移量 > 
+            if(pageYOffset > container.offsetTop - container.offsetHeight - 200
+             && activated ===false ){
+                //选择所有的counters
+                counters.forEach(counter =>{
+                    //初始值设为0
+                    counter.innerText = 0;
+                    let count =0;
+                    //数据跟新函数
+                    function updateCount(){
+                        //dataset是自定义的目标数字
+                        const target = parseInt(counter.dataset.count);
+                        //没有达到目标值
+                        if(count <target){
+                            count++;
+                            counter.innerText = count;
+                            setTimeout(updateCount,10);
+                            //达到目标值
+                        }else{
+                            counter.innerText = target;
+                        }
+                    }
+                    //初始时就运行
+                    updateCount();
+                    activated = true    
+                });
+                //如果页面回滚到上面 
+            }else if(
+                pageYOffset < container.offsetTop -container.offsetHeight - 500
+                || pageYOffset === 0 && activated === true
+            ){
+                counters.forEach(counter =>{
+                    counter.innerText = 0;
+                });
+                activated = false;
+            }
+        })
+        const mytest=()=>{
+            var a = true;
+            var b = false;
+            var c = false;
+            var d = false;
+            if(a||b&&c){
+                console.log("you are right");
+                console.log("a&&c||d",a&&c||d);
+            }else{
+                console.log("wrong");
+            }
+        }
+    </script>
+</body>
+</html>

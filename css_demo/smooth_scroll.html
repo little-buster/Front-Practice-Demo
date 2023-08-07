@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pink老师——电梯导航</title>
+    <style>
+        html{
+            scroll-behavior: smooth;
+        }
+        body{
+            background: rgba(230, 169, 179, 0.2);
+        }
+        h1{
+            color: white;
+        }
+        .content{
+            width: 60vw;
+            height: 40vh;
+            background: #c5edef;
+            border-radius: 20px;
+            border: #4890e9 10px solid;
+            margin: 20vh auto;
+            overflow: hidden;
+            /* 溢出内容以省略号表现 */
+            text-overflow: ellipsis;
+            /* 规定段落中的文本不进行换行  */
+            white-space: nowrap;
+        }
+        .content span{
+            text-align: center;
+            font: 900 30px '';
+            background: linear-gradient(to right,#d599db,#df05f3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+           
+        }
+        .content p{
+            font: bold 23px Arial, sans-serif;
+            margin: 0;
+            color: #000;
+        }
+        .content p:nth-child(2){
+           margin-top: 5vh;
+        }
+        .digital{
+            width: 60vw;
+            height: 40vh;
+            background: #8a00d4;
+            border-radius: 20px;
+            border: #d527b7 10px solid;
+            margin-bottom: 170px;
+        }
+        .fresh{
+            width: 60vw;
+            height: 40vh;
+            background: #f782c2;
+            border-radius: 20px;
+            border: #f9c46b 10px solid;
+            margin-bottom: 170px;
+        }
+        .medicine{
+            width: 60vw;
+            height: 40vh;
+            background: #e74645;
+            border-radius: 20px;
+            border: #fb7756 10px solid;
+            margin-bottom: 170px;
+        }
+        .sliderbar{
+           
+            position: fixed;
+            height: 20vh;
+            width: 20vw;
+            left: 80vw;
+            top: 200px;
+           
+
+        }
+        .sliderbar a{
+            display: inline-block;
+            height: 10vh;
+            width: 12vw;
+            text-decoration: none;
+            border: #d1e8ea 3px solid;
+            border-radius: 23%;
+            text-align: center;
+            /* 文字高度与盒子高度一致时文字垂直居中 */
+            line-height: 10vh; 
+            font-weight: bold;
+            color:#454d66 ;
+            
+        }
+        .sliderbar a:first-child{
+            background: #309975;
+        }
+        .sliderbar a:nth-child(2){
+            background:#dad873 ;
+        }
+        .sliderbar a:nth-child(3){
+            background:linear-gradient(to right,#54d2d2,#ffcb00,#f8aa4b);
+        }
+        .sliderbar a:last-child{
+            background:#58b368 ;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <span>滚动条流畅滑动</span>
+        <p>html{</p> <br>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;scroll-behavior:smooth;</p><br>
+        <p>}</p>
+    </div>
+    <div class="digital" id="box1"><h1>数码</h1></div>
+    <div class="fresh" id="box2"><h1>生鲜</h1></div>
+    <div class="medicine" id="box3"><h1>医药</h1></div>
+
+    <div class="sliderbar">
+        <a href="#">TOP</a>
+        <a href="#box1">数码</a>
+        <a href="#box2">生鲜</a>
+        <a href="#box3">医药</a>
+    </div>
+</body>
+</html>
