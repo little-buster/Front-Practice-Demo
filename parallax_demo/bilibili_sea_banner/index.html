@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bilibili夏日</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0; 
+        }
+        body{
+            width: 1950px;
+           
+        }
+        .container{
+           position: relative;
+           margin-top: 20vh;
+           overflow: hidden;
+           height: 100%;
+           width: 100%;
+           border: red solid 2px;
+        }
+        .banner>img{
+            position:absolute;
+            
+            height: 100%;
+            width: 100%;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section class="banner">
+            <img src="./bilibili_banner_img/bg.png" alt="" class="layer" data-speed="5">
+            <img src="./bilibili_banner_img/front_turtle.png" alt="" data-speed="-12" class="layer">
+        </section>
+    </div>
+    <img src="./bilibili_banner_img/bg.png" alt="" data-speed="5">
+    <img src="./bilibili_banner_img/front_turtle.png" alt="" data-speed="-12">
+    <img src="./bilibili_banner_img/front_ground_stone.png" alt="">
+    <canvas id="myCanvas"></canvas>
+</body>
+<script>
+    document.addEventListener('mousemove',parallax);
+   function parallax(e){
+    this.querySelectorAll('.layer').forEach(layer => {
+        const speed = layer.getAttribute('data-speed')
+        const x = (window.innerWidth - e.pageX * speed) / 75 
+        layer.style.transform = `translateX(${x}px)`
+    })
+   }
+   
+   const canvas = document.getElementById("myCanvas");
+  const ctx = canvas.getContext("2d");
+
+  // 加载图片
+  const image1 = new Image();
+  image1.src = "./bilibili_banner_img/bg.png";
+  const image2 = new Image();
+  image2.src = "./bilibili_banner_img/front_ground_stone.png";
+  const image3 = new Image();
+  image3.src = "./bilibili_banner_img/front_turtle.png";
+  let x = 0;
+  let angle = 0;
+  let scaleX = 1;
+  let scaleY = 1;
+
+  function draw() {
+    // 清空画布
+    ctx.clearRect(0, 0, image1.width, image1.height);
+
+    // 创建临时画布
+    const tempCanvas = document.createElement("canvas");
+    const tempCtx = tempCanvas.getContext("2d");
+    const tempCanvas2 = document.createElement("canvas");
+    const tempCtx2 = tempCanvas.getContext("2d");
+
+    // 设置临时画布尺寸与图片尺寸一致
+    tempCanvas.width = image1.width;
+    tempCanvas.height = image1.height;
+    tempCanvas2.width = image1.width;
+    tempCanvas2.height = image1.height;
+    // 在临时画布上绘制图片并应用旋转变换
+    
+    tempCtx.translate(image1.width / 2, image1.height / 2);
+    tempCtx.rotate(angle* (Math.PI / 180));
+    tempCtx.drawImage(image1, -image1.width / 2, -image1.height / 2);
+
+
+    tempCtx2.translate(image1.width / 2, image1.height / 2);
+    tempCtx2.rotate(angle* Math.PI / 180);
+    tempCtx2.scale(1+scaleX,1+scaleY)
+    tempCtx2.drawImage(image3, -image1.width / 2, -image1.height / 2);
+    console.log("新坐标："+(-image1.width / 2), (-image1.height / 2));
+    
+    
+    // 将临时画布上的内容绘制到主画布上
+    canvas.width  = image1.width;
+    canvas.height = image1.height+150;
+    ctx.drawImage(tempCanvas, -650, 0);
+    ctx.drawImage(image2,x-450,100)
+    ctx.drawImage(tempCanvas2,image1.width/2,image1.height/2)
+    // 清除临时画布
+    tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
+    tempCtx2.clearRect(0, 0, tempCanvas2.width, tempCanvas2.height);
+  }
+
+  function animate() {
+    // 在每一帧更新位置并重新绘制
+    requestAnimationFrame(animate);
+
+    draw();
+  }
+
+  // 监听鼠标移动事件
+  canvas.addEventListener("mousemove", (event) => {
+    // 获取鼠标在 Canvas 中的位置
+    const rect = canvas.getBoundingClientRect();
+    x = (event.clientX - rect.left)/150;
+    angle = (event.clientX - rect.left)/(180*5);  // 根据鼠标位置计算旋转角度
+    console.log(angle);
+    scaleX = (event.clientX - rect.left)/750;
+    scaleY = (event.clientX - rect.left)/750;
+    console.log(scaleX,scaleY);
+
+});
+
+  // 图片加载完成后启动动画
+  image1.onload = () => {
+    animate();
+  };
+</script>
+</html>

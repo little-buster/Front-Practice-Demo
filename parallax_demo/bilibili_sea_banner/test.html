@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        #canvascontainer {
+            padding: 0;
+            width: 125vw;
+            height: 250px;
+            overflow: hidden;
+            position: absolute;
+            left: -200px;
+            top: -15px;
+            margin-bottom: 300px;
+            transform: scaleY(0.9) scaleX(0.8);
+            
+        }
+        .img-blur {
+            filter: blur(5px);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="canvascontainer">
+        <canvas id="1">
+        </canvas>
+    </div>
+   
+    <div class="testcanvas"></div>
+
+
+</body>
+<script>
+    const img_bg = new Image();
+    img_bg.src = "./bilibili_banner_img/bg.png"
+
+    const img_background = new Image();
+    img_background.src = "./bilibili_banner_img/background.png"
+    
+    
+
+    const img_bg_left = new Image();
+    img_bg_left.src = "./bilibili_banner_img/bg_left.png"
+
+    const img_front_ground_stone = new Image();
+    img_front_ground_stone.src = "./bilibili_banner_img/front_ground_stone.png"
+
+    const img_front_all_fishes = new Image();
+    img_front_all_fishes.src = "./bilibili_banner_img/front_all_fishes.png"
+
+    const img_front_turtle = new Image();
+    img_front_turtle.src = "./bilibili_banner_img/front_turtle.png"
+
+    const img_bg_wheal = new Image();
+    img_bg_wheal.src = "./bilibili_banner_img/bg_wheal.png"
+
+    const img_bg_bubble = new Image();
+    img_bg_bubble.src = "./bilibili_banner_img/bg_bubble.png"
+
+    const img_font_preview = new Image();
+    img_font_preview.src = "./bilibili_banner_img/font_preview.png"
+
+    const img_idontknowfish = new Image();
+    img_idontknowfish.src = "./bilibili_banner_img/idontknowfish.png";
+
+    const img_front_view = new Image();
+    img_front_view.src = "./bilibili_banner_img/front_view.png"
+
+    const img_front_colorful_fishes = new Image();
+    img_front_colorful_fishes.src = "./bilibili_banner_img/front_colorful_fishes.png";
+
+    const img_front_little_bubbl = new Image();
+    img_front_little_bubbl.src = "./bilibili_banner_img/front_little_bubble.png";
+
+    const img_font_ray = new Image();
+    img_font_ray.src = "./bilibili_banner_img/front_ray.png";
+
+    const img_font_fishes = new Image();
+    img_font_fishes.src="./bilibili_banner_img/front_fishes.png"
+    
+
+    const canvascontainer = document.getElementById("canvascontainer")
+    const canvas = document.getElementById("1")
+    const context = canvas.getContext("2d");
+    let x = 0;
+    let angle = 0;
+    let scaleX = 1;
+    let scaleY = 1 ;
+
+    
+
+
+    const test = document.querySelector(".testcanvas")
+
+    const draw = () => {
+        canvas.width = img_bg.width
+        canvas.height = img_bg.height + 150;
+        context.drawImage(img_bg, x-200, 0)
+        context.drawImage(img_bg_wheal, 800, 150 - x)
+
+
+        context.drawImage(img_front_ground_stone, -300 + x, 0)
+        context.drawImage(img_front_all_fishes, 1200 - x, 0)
+        
+
+        context.drawImage(img_bg_left, 650 - x, 0)
+        context.drawImage(img_font_preview,450+x*2,0)
+        context.drawImage(img_font_fishes,400+x,-20)
+
+        const tempCanvas = document.createElement("canvas");
+        const tempCtx = tempCanvas.getContext("2d");
+
+        tempCanvas.width = img_bg.width;
+        tempCanvas.height = img_bg.height+120;
+        tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
+        tempCtx.translate(tempCanvas.width / 2, tempCanvas.height / 2);
+        
+        tempCtx.rotate(angle*Math.PI/15)
+        tempCtx.scale(1+scaleX/20,1+scaleY/20)
+        tempCtx.drawImage(img_front_turtle,x,-80)
+        context.drawImage(img_font_ray,600-1.4*x,20)
+        //  test.appendChild(tempCanvas)
+
+// 将临时画布上的内容绘制到主画布上
+context.drawImage(tempCanvas, -600-20*x , -120);
+
+// 清除临时画布
+//tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height+120);
+
+        // context.drawImage(img_front_turtle, 800 + 10 * x, x)
+
+
+
+
+
+
+
+        context.drawImage(img_bg_bubble, -x, 0)
+
+        
+        context.drawImage(img_idontknowfish, -x, 0)
+        context.drawImage(img_front_colorful_fishes, 900 + 1.5 * x, 0)
+        context.drawImage(img_front_little_bubbl, 0 + 7 * x, 0)
+        context.drawImage(img_front_view, -250 + 16*x, 0)
+        context.filter = "blur(3px)";
+        context.drawImage(img_background, 10*x, 0)
+        
+        
+        
+       
+    }
+
+
+
+
+    
+    // const tempDraw = () => {
+
+    //     tempCanvas.width = 1200;
+    //     tempCanvas.height = 600;
+        
+    //     tempCtx.fillStyle = "red";
+    //     tempCtx.fillRect(100, 200, 400, 500);
+    //     tempCtx.scale(3,3);
+       
+    // }
+    // tempDraw();
+
+    // canvascontainer.appendChild(tempCanvas);
+
+    canvas.addEventListener("mousemove", (event) => {
+        // 获取鼠标在 Canvas 中的位置
+        const rect = canvas.getBoundingClientRect();
+        x = (event.clientX - rect.left) / 150;
+        angle = (event.clientX - rect.left) / (180*5)-0.7;  // 根据鼠标位置计算旋转角度
+        //console.log("angle："+angle);
+        scaleX = (event.clientX - 660) / 660;
+        scaleY = (event.clientX - 660) / 660;
+        console.log(event.clientX);
+        console.log(scaleX, scaleY);
+
+    });
+    function animate() {
+        // 在每一帧更新位置并重新绘制
+        requestAnimationFrame(animate);
+        draw();
+    }
+
+
+    img_bg.onload = () => {
+        animate();
+    }
+    img_front_ground_stone.onload = () => {
+        animate();
+    }
+    img_background.onload=()=>{
+        animate();
+    }
+
+    img_idontknowfish.onload = () => {
+        animate();
+    }
+    img_font_preview.onload = () => {
+        animate();
+    }
+    img_front_little_bubbl.onload = () => {
+        animate();
+    }
+    img_font_ray.onload = ()=>{
+        animate();
+    }
+</script>
+
+</html>

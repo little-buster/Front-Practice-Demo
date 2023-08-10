@@ -1,0 +1,5 @@
+#b站首页最新animationbanner
+B站使用layer直接完成
+这里使用canvas实现，还有根据鼠标更改opacity等没有实现
+效果在test.html中
+写的太烂了，仅供参考
