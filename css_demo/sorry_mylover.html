@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>七夕快乐！</title>
+    <style>
+        body{
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: monospace;
+            background-color: #454545;
+            color: #fff;
+        }
+        h1{
+            position: relative;
+            /* outline: 20px solid #000; */
+            font-size: 100px;
+        }
+        h1::after,h1::before{
+            content: '';
+            position: absolute;
+            /* 四个方向的偏移量都是0 */
+            inset: 0;
+        }
+        /* 文字遮罩，来模拟显示删除文字的伪类 */
+        h1::before{
+            background-color: #454545;
+            animation: typing 3s steps(7) 500ms  forwards,
+            del 2s steps(4) 4.5s forwards;
+        }
+        @keyframes typing{
+            to{
+                left: 100%;
+            }
+        }
+        h1::after{
+            width: 10px;
+            background: #000;
+            animation: typing 3s steps(7) 500ms forwards,
+            blink 500ms infinite,
+            del 2s steps(4) 4.5s forwards;
+        }
+        @keyframes blink {
+            from,to{
+                background: transparent;
+            }
+            50%{
+                background: #fff;
+            }
+        }
+        /* 完成文字回删动画的动画 */
+        @keyframes del {
+            from{
+                left: 100%;
+            }
+            to{
+                left: 6ch;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+        <h1 class="typing">对不起，我爱你</h1>
+    
+    
+</body>
+</html>
