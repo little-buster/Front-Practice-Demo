@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        
+        .test{
+            width: 300px;
+            height: 150px;
+            background: #f78dd3;
+            z-index: 1;
+            position: absolute;
+            margin: 0 auto;
+        }
+        .test:first-child{
+            background: #8cf681;
+            position: absolute;
+            z-index: 2;
+            border-radius: 50%;
+        }
+        .test:nth-child(2){
+            top: 200px;
+            background: #f58e4f;
+        }
+        .test:nth-child(3){
+            top: 200px;
+            background: #4ff5b8;
+            border-radius: 20%;
+        }
+        .test:nth-child(4){
+            top: 400px;
+            background: #7368f1;
+            /* 和margin等一样 也是顺时针 从左上开始 */
+            border-radius: 10% 20% 30% 40%; 
+        }
+        .test:nth-child(5){
+            top: 600px;
+            background: #f1689d;
+            /* 和margin等一样 也是顺时针 从左上开始 */
+            border-radius: 30px 200px; 
+        }
+        .test:nth-child(5):hover{
+            background: #8cf681;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="test"></div>
+    <div class="test"></div>
+
+    <div class="test"></div>
+    <div class="test"></div>
+
+    <div class="test"></div>
+    <div class="test"></div>
+
+
+    
+</body>
+</html>

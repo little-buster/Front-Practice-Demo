@@ -36,13 +36,16 @@
                 left: 100%;
             }
         }
+        /* 输入光标，一直闪烁 */
         h1::after{
             width: 10px;
-            background: #000;
+            /* 这个颜色好像没啥用了 */
+            background: #07ef41;
             animation: typing 3s steps(7) 500ms forwards,
             blink 500ms infinite,
             del 2s steps(4) 4.5s forwards;
         }
+        /* 变到白色，首尾透明，模拟闪烁效果 */
         @keyframes blink {
             from,to{
                 background: transparent;
